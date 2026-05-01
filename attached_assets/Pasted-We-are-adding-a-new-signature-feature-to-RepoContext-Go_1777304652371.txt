@@ -1,0 +1,73 @@
+We are adding a new signature feature to RepoContext.
+
+Goal:
+Add a globe-to-map background visualization that highlights the inferred owner country for a GitHub repo.
+
+Important product rule:
+Never claim the repository itself is from a country.
+The correct wording is:
+“Country inferred from the repository owner’s public GitHub profile location.”
+
+Implement this in two clean layers.
+
+Phase 1 — backend/data support
+
+1. Extend the existing server-side GitHub flow to fetch the repository owner profile:
+- Determine owner login and whether it is a user or organization
+- Fetch the public owner profile from GitHub
+- Read the public `location` field if available
+
+2. Add a small server-side inference utility:
+- Input: raw location string
+- Output:
+  - ownerLocationRaw: string | null
+  - ownerCountry: string | null
+  - ownerCountryCode: string | null
+  - locationConfidence: "high" | "medium" | "low" | "none"
+- Start with deterministic mapping only:
+  - exact country names
+  - common aliases (US, USA, United States, UK, United Kingdom, India, Germany, etc.)
+  - a small curated city-to-country map for major cities only
+- If mapping is ambiguous or missing, return null country and confidence "none"
+- Do not call external geocoding services in this pass
+
+3. Extend the API response shape with these owner-location fields.
+4. Keep all GitHub API logic server-side only.
+
+Phase 2 — globe/map visual layer
+
+1. Add a background visualization component for the page:
+- Idle state: subtle spinning globe wireframe in the background
+- Success state: animate globe into a flat world map
+- If ownerCountryCode exists and confidence is high or medium, highlight that country
+- If no reliable country is inferred, show the map without highlight
+
+2. This visual layer must be:
+- decorative but high quality
+- behind the main content
+- performance-conscious
+- reduced-motion friendly
+- non-blocking for the core app
+
+3. Use a safe implementation approach:
+- prefer canvas/WebGL/SVG approach that fits the current Next.js app
+- do not break the current API/UI
+- do not add auth, DB, AI, embeddings, vector search, or background jobs
+
+Phase 3 — UI wording and fallbacks
+
+Add a small metadata line in the result UI with one of these states:
+- “Inferred owner country: India”
+- “Owner location unavailable”
+- “Owner location could not be mapped to a country”
+
+Add supporting subtext:
+- “Based on the repository owner’s public GitHub profile location”
+
+Rules:
+- Keep the current architecture
+- Keep tests passing
+- Add tests for the country inference utility
+- Explain the implementation plan briefly before coding
+- Then implement in small steps
+- Show me changed files, new API fields, and remaining limitations

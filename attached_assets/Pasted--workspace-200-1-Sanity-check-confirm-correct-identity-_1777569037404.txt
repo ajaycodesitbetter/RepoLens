@@ -1,0 +1,53 @@
+~/workspace$ ^[[200~# 1. Sanity check — confirm correct identity is set
+# 1. Sanity check — confirm correct identity is setbash: #: command not found
+~/workspace$ git config user.name
+Ajay Mathuriya
+~/workspace$ git config user.email
+ajaymathuriya@protonmail.com
+~/workspace$ 
+~/workspace$ # 2. Rewrite both author and committer for every commit on every branch/tag
+~/workspace$ FILTER_BRANCH_SQUELCH_WARNING=1 git filter-branch -f --env-filter '
+>   OLD_EMAIL_1="44016712-fakeforhalo123@users.noreply.replit.com"
+>   OLD_EMAIL_2="agent@replit.com"
+>   CORRECT_NAME="Ajay Mathuriya"
+>   CORRECT_EMAIL="ajaymathuriya@protonmail.com"
+> 
+>   if [ "$GIT_COMMITTER_EMAIL" = "$OLD_EMAIL_1" ] || [ "$GIT_COMMITTER_EMAIL" = "$OLD_EMAIL_2" ]; then
+>     export GIT_COMMITTER_NAME="$CORRECT_NAME"
+>     export GIT_COMMITTER_EMAIL="$CORRECT_EMAIL"
+>   fi
+>   if [ "$GIT_AUTHOR_EMAIL" = "$OLD_EMAIL_1" ] || [ "$GIT_AUTHOR_EMAIL" = "$OLD_EMAIL_2" ]; then
+>     export GIT_AUTHOR_NAME="$CORRECT_NAME"
+>     export GIT_AUTHOR_EMAIL="$CORRECT_EMAIL"
+>   fi
+> ' --tag-name-filter cat -- --branches --tags
+Rewrite 7d5940b44993b4eb9165de2966bb670c68f63ad7 (41/60) (1 seconds passed, remaining 0 predicted)    
+Ref 'refs/heads/main' was rewritten
+Ref 'refs/heads/replit-agent' was rewritten
+~/workspace$ 
+~/workspace$ # 3. Verify the rewrite locally before pushing
+~/workspace$ git log --pretty=format:'%h  %an <%ae>  %s' -20
+428c275  Ajay Mathuriya <ajaymathuriya@protonmail.com>  Refine product presentation and strengthen technical credibility
+3d9ee03  Ajay Mathuriya <ajaymathuriya@protonmail.com>  Update README to remove platform-specific branding and improve clarity
+25c1898  Ajay Mathuriya <ajaymathuriya@protonmail.com>  Revise README for clarity and feature updates
+45991d5  Ajay Mathuriya <ajaymathuriya@protonmail.com>  Update project name and README documentation
+2de5639  Ajay Mathuriya <ajaymathuriya@protonmail.com>  Improve visibility of background globe by reducing card blur
+e4a7447  Ajay Mathuriya <ajaymathuriya@protonmail.com>  Update primary accent color to warm amber and gold tones
+9355326  Ajay Mathuriya <ajaymathuriya@protonmail.com>  Restored to '5179313301c06fde3782b592bf7ce256aa44c7b7'
+856aacf  Ajay Mathuriya <ajaymathuriya@protonmail.com>  Restored to 'da54940761a0d35f56bba3526ffda9f1f985731b'
+23c652d  Ajay Mathuriya <ajaymathuriya@protonmail.com>  Update website colors and fonts to an "old money" aesthetic
+1ff4eec  Ajay Mathuriya <ajaymathuriya@protonmail.com>  Improve homepage UI and typography for a more polished look
+186561f  Ajay Mathuriya <ajaymathuriya@protonmail.com>  Make cards more transparent to show the globe behind them
+ec592d7  Ajay Mathuriya <ajaymathuriya@protonmail.com>  Make all result cards translucent with a frosted glass effect
+9ef36eb  Ajay Mathuriya <ajaymathuriya@protonmail.com>  Make result cards transparent to see globe background
+dedf8db  Ajay Mathuriya <ajaymathuriya@protonmail.com>  Update UI to highlight repository owner countries on the globe
+7c7c6f9  Ajay Mathuriya <ajaymathuriya@protonmail.com>  Add session handoff documentation and update project status
+db21da6  Ajay Mathuriya <ajaymathuriya@protonmail.com>  Add ability to copy onboarding brief as markdown
+b963615  Ajay Mathuriya <ajaymathuriya@protonmail.com>  Add city data for Seattle area and improve handling of vague locations
+ae90788  Ajay Mathuriya <ajaymathuriya@protonmail.com>  Add project type detection and onboarding guidance to the repository view
+b00a860  Ajay Mathuriya <ajaymathuriya@protonmail.com>  Make hero section fully transparent to reveal globe
+835d21c  Ajay Mathuriya <ajaymathuriya@protonmail.com>  Update background visualization to match technical wireframe style
+~/workspace$ # 4. Force-push safely (refuses if remote moved unexpectedly)
+~/workspace$ git push --force-with-lease origin main~^[[200~--force-with-lease~
+--force-with-lease~fatal: invalid refspec 'main~?[200~--force-with-lease~'
+~/workspace$

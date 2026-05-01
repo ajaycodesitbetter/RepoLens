@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: oklch(0.99 0 0);
+  --color-foreground: oklch(0.16 0.01 270);
+
+  --color-card: oklch(1 0 0);
+  --color-card-foreground: oklch(0.16 0.01 270);
+
+  --color-muted: oklch(0.96 0.005 270);
+  --color-muted-foreground: oklch(0.45 0.015 270);
+
+  --color-border: oklch(0.92 0.005 270);
+  --color-input: oklch(0.92 0.005 270);
+  --color-ring: oklch(0.62 0.13 65);
+
+  --color-primary: oklch(0.62 0.13 65);
+  --color-primary-foreground: oklch(0.99 0 0);
+
+  --color-secondary: oklch(0.96 0.005 270);
+  --color-secondary-foreground: oklch(0.2 0.01 270);
+
+  --color-destructive: oklch(0.58 0.22 27);
+  --color-destructive-foreground: oklch(0.99 0 0);
+
+  --color-accent: oklch(0.96 0.005 270);
+  --color-accent-foreground: oklch(0.2 0.01 270);
+
+  --radius: 0.625rem;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-serif: var(--font-instrument), "Instrument Serif", ui-serif, Georgia,
+    "Times New Roman", serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, "SF Mono",
+    Menlo, Consolas, "Liberation Mono", monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  @theme {
+    --color-background: oklch(0.16 0.01 270);
+    --color-foreground: oklch(0.97 0.005 270);
+
+    --color-card: oklch(0.2 0.012 270);
+    --color-card-foreground: oklch(0.97 0.005 270);
+
+    --color-muted: oklch(0.24 0.012 270);
+    --color-muted-foreground: oklch(0.68 0.012 270);
+
+    --color-border: oklch(0.28 0.012 270);
+    --color-input: oklch(0.28 0.012 270);
+    --color-ring: oklch(0.78 0.13 75);
+
+    --color-primary: oklch(0.78 0.13 75);
+    --color-primary-foreground: oklch(0.16 0.01 270);
+
+    --color-secondary: oklch(0.24 0.012 270);
+    --color-secondary-foreground: oklch(0.97 0.005 270);
+
+    --color-destructive: oklch(0.65 0.22 27);
+    --color-destructive-foreground: oklch(0.99 0 0);
+
+    --color-accent: oklch(0.24 0.012 270);
+    --color-accent-foreground: oklch(0.97 0.005 270);
+  }
+}
+
+html {
+  color-scheme: light dark;
+}
+
+body {
+  font-family: var(--font-sans);
+}
+
+*:focus-visible {
+  outline: 2px solid var(--color-ring);
+  outline-offset: 2px;
+}

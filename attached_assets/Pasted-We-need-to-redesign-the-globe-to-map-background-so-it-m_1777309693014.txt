@@ -1,0 +1,86 @@
+We need to redesign the globe-to-map background so it matches the attached reference images much more closely.
+
+Important:
+I am attaching reference screenshots. Use them as visual direction.
+Do not just keep the current implementation and tweak small things.
+This is a visual redesign task.
+
+Goal:
+Create a premium, dark, technical globe-to-map background that feels like the reference:
+- black / near-black background
+- thin white wireframe lines
+- subtle latitude/longitude grid
+- elegant technical look
+- no cartoon feel
+- no bright multicolor gradients
+- no playful SaaS style
+- no generic dashboard decoration
+
+What I want:
+1. Idle state
+- A centered rotating 3D-style wireframe globe in the background
+- Thin white or soft-gray continent outlines
+- Thin meridian/parallels visible
+- Slow, smooth rotation
+- Very subtle glow, if any
+- Feels like a serious technical visualization
+
+2. On successful repo load
+- The globe should smoothly transform/unroll into a flat equirectangular-style world map
+- Keep the same monochrome wireframe style
+- Preserve grid lines so the transition feels mathematically related
+- The result should resemble the reference screenshots:
+  - globe first
+  - map second
+  - same visual family
+
+3. Country highlighting
+- Highlight only the inferred owner country
+- Use a restrained amber or soft off-white accent, not bright neon
+- The highlight must be subtle and elegant
+- If no country is inferred, show the map without highlight
+
+4. UI layering
+- This must stay as a background visual layer
+- Main RepoContext UI stays readable above it
+- The background should never overpower the content
+- Use low opacity and strong depth control
+
+5. Motion quality
+- Smooth, polished transition
+- No abrupt cross-fade if a shape-morph or staged transform is feasible
+- Prefer a deliberate animation sequence:
+  - globe rotation slows
+  - globe unwraps / flattens
+  - map settles
+  - country highlight appears
+- Respect prefers-reduced-motion
+
+6. Style constraints
+- Do not use loud gradients
+- Do not use colorful country fills
+- Do not use a glossy/glassmorphism hero look
+- Do not use generic animated blobs
+- Do not make it look like a startup landing page
+- Do not make it decorative clutter
+- Keep it technical, minimal, monochrome, elegant
+
+7. Technical constraints
+- Keep the current app architecture
+- Do not touch GitHub API logic unless required for the country highlight data already added
+- Keep tests passing
+- Keep the feature non-blocking and performant
+- Prefer SVG/canvas/WebGL only if the result is clearly better
+- If a world-outline dataset is needed, use a lightweight, maintainable approach
+
+8. Deliverable
+- Redesign the current background visualization to match the attached references much more closely
+- Show me the files changed
+- Explain what visual choices were made
+- Call out any tradeoffs or limitations
+
+Before coding:
+- Briefly compare the current implementation vs the reference
+- State what is visually wrong with the current version
+- State your redesign plan in 5-8 bullets
+- Then implement

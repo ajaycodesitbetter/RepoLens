@@ -1,0 +1,127 @@
+# RepoLens
+
+Read GitHub repos in seconds with public repo briefs, key file surfacing, and selective file access.
+
+RepoLens helps you understand a public GitHub repository quickly without manually digging through the entire codebase. Paste a repo URL or `owner/repo`, and RepoLens surfaces a concise brief, detects project structure, and highlights the files most worth reading first.
+
+## Why RepoLens
+
+Open-source repositories are often hard to evaluate quickly.  
+RepoLens is built to reduce that friction.
+
+Instead of forcing you to scan dozens of files manually, it gives you a fast first-pass understanding of:
+- what the project is
+- how it is structured
+- where it likely comes from
+- which files matter most first
+
+## Features
+
+- Public repo briefs from a GitHub URL or `owner/repo`
+- Project type detection using repository tree heuristics
+- GitHub metadata inference
+- Owner location/country inference
+- Globe-based visual exploration
+- API route for repo analysis
+- Planned selective file download / file access workflow
+
+## How it works
+
+RepoLens analyzes public GitHub repositories by inspecting repository structure and related metadata, then produces a fast high-level summary for exploration.
+
+Current flow:
+1. Paste a public GitHub repo URL
+2. RepoLens fetches repository context
+3. It infers project type and metadata
+4. It highlights useful repo information in a clean UI
+
+## Tech stack
+
+- Next.js 15
+- TypeScript
+- pnpm
+- GitHub REST API
+- Replit / Netlify deployment workflow
+
+## Getting started
+
+### Prerequisites
+
+- Node.js
+- pnpm
+- GitHub token for higher API limits
+
+### Installation
+
+```bash
+pnpm install
+```
+
+### Development
+
+```bash
+pnpm dev
+```
+
+### Typecheck
+
+```bash
+pnpm run typecheck
+```
+
+### Tests
+
+```bash
+pnpm test
+```
+
+### Production build
+
+```bash
+pnpm run build
+pnpm run start
+```
+
+## Environment variables
+
+Create an environment variable for:
+
+```bash
+GITHUB_TOKEN=your_github_token_here
+```
+
+Notes:
+- `GITHUB_TOKEN` is strongly recommended for real production usage.
+- Without it, the app may fall back to mock data depending on runtime configuration.
+
+## Example input
+
+- `facebook/react`
+- `vercel/next.js`
+- `vuejs/core`
+
+## Deployment
+
+This app requires a server runtime.
+
+It is **not** suitable for static-only hosting such as GitHub Pages because it includes a dynamic API route for repository analysis.
+
+Good deployment options:
+- Replit Autoscale
+- Netlify
+
+### Replit
+
+Use:
+- Build command: `pnpm run build`
+- Run command: `pnpm run start`
+
+Add deployment secret:
+- `GITHUB_TOKEN`
+
+### Netlify
+
+- Import the GitHub repository
+- Let Netlify detect the Next.js project
+- Add `GITHUB_TOKEN` in environment variables
+- Deploy and verify live 

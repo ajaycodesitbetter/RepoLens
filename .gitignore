@@ -1,0 +1,39 @@
+# dependencies
+node_modules
+.pnp
+.pnp.*
+
+# next.js
+/.next/
+/out/
+next-env.d.ts
+
+# build / compiled output
+dist
+tmp
+*.tsbuildinfo
+
+# misc
+/coverage
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# system
+.DS_Store
+Thumbs.db
+
+# IDE
+/.idea
+/.vscode/*
+!/.vscode/settings.json
+
+# Replit
+.cache/
+.local/
+
+# env (never commit secrets)
+.env
+.env.local
+.env.*.local
